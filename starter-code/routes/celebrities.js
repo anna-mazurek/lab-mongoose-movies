@@ -32,28 +32,49 @@ celebritiesRouter.get("/:celebrityId", (req, res, next) => {
 });
 
 celebritiesRouter.get("/:celebrityId/edit", (req, res, next) => {
-  const celebrityId = req.params.celebrityId;
-  Celebrity.findById(celebrityId)
+  const { id } = req.params;
+  Celebrity.findById(id)
     .then((oneCelebrity) => {
       const data = {
         oneCelebrity: oneCelebrity,
       };
-
       res.render("celebrities/edit", data);
     })
     .catch((err) => console.log(err));
 });
-
 celebritiesRouter.post("/:celebrityId", (req, res, next) => {
   const { name, occupation, catchPhrase } = req.body;
-  const { celebrityId } = req.params;
-
+  const { id } = req.params;
   Celebrity.findByIdAndUpdate(id, { name, occupation, catchPhrase })
-    .then((createdCelebrity) => {
+    .then((updatedCelebrity) => {
       res.redirect("/");
     })
     .catch((err) => res.render("celebrities/edit", data));
 });
+
+// celebritiesRouter.get("/:celebrityId/edit", (req, res, next) => {
+//   const celebrityId = req.params.celebrityId;
+//   Celebrity.findById(celebrityId)
+//     .then((oneCelebrity) => {
+//       const data = {
+//         oneCelebrity: oneCelebrity,
+//       };
+
+//       res.render("celebrities/edit", data);
+//     })
+//     .catch((err) => console.log(err));
+// });
+
+// celebritiesRouter.post("/:celebrityId", (req, res, next) => {
+//   const { name, occupation, catchPhrase } = req.body;
+//   const { celebrityId } = req.params;
+
+//   Celebrity.findByIdAndUpdate(id, { name, occupation, catchPhrase })
+//     .then((createdCelebrity) => {
+//       res.redirect("/");
+//     })
+//     .catch((err) => res.render("celebrities/edit", data));
+// });
 
 // Receives the data from the add CELEBRITY form
 
